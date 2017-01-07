@@ -8,7 +8,7 @@ import re
 import web
 
 # test curl
-# curl -vX POST http://0.0.0.0:8080/ -d @webhookdata.json --header "Content-Type: application/json"
+# curl -vX POST http://0.0.0.0:8080/tfwebhook -d @webhookdata.json --header "Content-Type: application/json"
 
 # db config
 dbc = {
@@ -29,10 +29,10 @@ class hooks:
         print 'DATA RECEIVED:'
         jsondata = json.loads(data)
         data_handler(jsondata)
-        return 'OK'
+        return web.ok('explicit 200')
 
     def GET(self):
-        return 'OK'
+        return web.ok('explicit 200')
 
 if __name__ == '__main__':
     app.run()
