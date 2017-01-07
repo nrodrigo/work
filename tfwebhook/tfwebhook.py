@@ -12,14 +12,15 @@ import web
 
 # db config
 dbc = {
-    'username': 'root',
+    'username': 'tfwebhook',
     'database': 'tfwebhook',
     'server': 'localhost',
-    #'password': ''
+    'password': 'tfwebhook765#1!'
     }
 
-urls = ('/tfwebhook', 'hooks')
-app = web.application(urls, globals())
+urls = ('/.*', 'hooks')
+#application = web.application(urls, globals())
+application = web.application(urls, globals()).wsgifunc()
 
 class hooks:
 
@@ -34,22 +35,22 @@ class hooks:
     def GET(self):
         return web.ok('explicit 200')
 
-if __name__ == '__main__':
-    app.run()
+#if __name__ == '__main__':
+#    app.run()
 
 class data_handler:
     def __init__(self, json):
-        self.db = MySQLdb.connect(
-            host = dbc['server']
-            , user = dbc['username']
-            , db = dbc['database']
-            , cursorclass = MySQLdb.cursors.DictCursor)
         #self.db = MySQLdb.connect(
         #    host = dbc['server']
         #    , user = dbc['username']
         #    , db = dbc['database']
-        #    , password = dbc['password']
         #    , cursorclass = MySQLdb.cursors.DictCursor)
+        self.db = MySQLdb.connect(
+            host = dbc['server']
+            , user = dbc['username']
+            , db = dbc['database']
+            , passwd = dbc['password']
+            , cursorclass = MySQLdb.cursors.DictCursor)
         self.db.autocommit(True)
         self.cursor = self.db.cursor()
         self.data = json
